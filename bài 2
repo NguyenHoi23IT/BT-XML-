@@ -1,0 +1,58 @@
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+class SinhVien {
+    private String ten;
+    private int tuoi;
+    private double diemTrungBinh;
+
+    public SinhVien(String ten, int tuoi, double diemTrungBinh) {
+        this.ten = ten;
+        this.tuoi = tuoi;
+        this.diemTrungBinh = diemTrungBinh;
+    }
+
+    public String layTen() {
+        return ten;
+    }
+
+    public int layTuoi() {
+        return tuoi;
+    }
+
+    public double layDiemTrungBinh() {
+        return diemTrungBinh;
+    }
+}
+
+public class DanhSachSinhVienToXML {
+    public static void main(String[] args) {
+        List<SinhVien> danhSachSinhVien = new ArrayList<>();
+        danhSachSinhVien.add(new SinhVien("Nguyễn Văn Hội", 20, 3.8));
+        danhSachSinhVien.add(new SinhVien("Trần Thị Lệ", 21, 3.9));
+        danhSachSinhVien.add(new SinhVien("Lê Văn Cảm", 22, 3.5));
+
+        try {
+            FileWriter writer = new FileWriter("danh_sach_sinh_vien.xml");
+            writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+            writer.write("<danh_sach_sinh_vien>\n");
+
+            for (SinhVien sinhVien : danhSachSinhVien) {
+                writer.write("<sinh_vien>\n");
+                writer.write("\t<ten>" + sinhVien.layTen() + "</ten>\n");
+                writer.write("\t<tuoi>" + sinhVien.layTuoi() + "</tuoi>\n");
+                writer.write("\t<diem_trung_binh>" + sinhVien.layDiemTrungBinh() + "</diem_trung_binh>\n");
+                writer.write("</sinh_vien>\n");
+            }
+
+            writer.write("</danh_sach_sinh_vien>");
+            writer.close();
+            System.out.println("Đã xuất danh sách sinh viên thành công dưới dạng XML.");
+        } catch (IOException e) {
+            System.out.println("Đã xảy ra lỗi khi tạo tệp XML.");
+            e.printStackTrace();
+        }
+    }
+}
